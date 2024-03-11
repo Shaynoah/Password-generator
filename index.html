@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Password Generator</title>
+</head>
+<body>
+   
+  <div class="container">
+    
+    <h1>Password Generator</h1>
+    <div class="settings">
+      <label for="length">Password Length:</label>
+      <input type="number" id="length" value="12" min="6" max="30">
+      <br>
+      <label for="uppercase">Include Uppercase:</label>
+      <input type="checkbox" id="uppercase" checked>
+      <br>
+      <label for="numbers">Include Numbers:</label>
+      <input type="checkbox" id="numbers" checked>
+      <br>
+      <label for="symbols">Include Symbols:</label>
+      <input type="checkbox" id="symbols" checked>
+    </div>
+    <div class="password-container">
+      <input type="text" id="password" readonly>
+      <div id="strength" class="strength"></div>
+      <button onclick="generatePassword()">Generate Password</button>
+    </div>
+  </div>
+  <script >
+    function generatePassword() {
+  var length = document.getElementById("length").value;
+  var uppercase = document.getElementById("uppercase").checked;
+  var numbers = document.getElementById("numbers").checked;
+  var symbols = document.getElementById("symbols").checked;
+
+  var charset = "abcdefghijklmnopqrstuvwxyz";
+  if (uppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  if (numbers) charset += "0123456789";
+  if (symbols) charset += "!@#$%^&*()_-+=<>?";
+
+  var password = "";
+  for (var i = 0; i < length; i++) {
+    var randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset.charAt(randomIndex);
+  }
+
+  document.getElementById("password").value = password;
+  document.getElementById("strength").textContent = getPasswordStrength(password);
+}
+
+function getPasswordStrength(password) {
+  // Implement your password strength logic here
+  // This is a simple example, you can customize it based on your requirements
+  if (password.length < 8) {
+    return "Weak";
+  } else if (password.length < 12) {
+    return "Medium";
+  } else {
+    return "Strong";
+  }
+}
+
+  </script>
+</body>
+</html>
